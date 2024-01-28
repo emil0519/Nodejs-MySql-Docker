@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 
 import Response from "./domain/response.js";
+import logger from './util/logger.js';
 
 dotenv.config();
 
@@ -22,5 +23,5 @@ app.get("/", (req, res) =>
   )
 );
 app.listen(PORT, () =>
-  console.log(`Server running on: ${ip.address()}: ${PORT}`)
+  logger.info(`Server running on: ${ip.address()}: ${PORT}`)
 );
