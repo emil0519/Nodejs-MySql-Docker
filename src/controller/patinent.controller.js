@@ -46,7 +46,7 @@ export const creaetePatient = (req, res) => {
     QUERY.CREATE_PATIENT,
     Object.values(req.body),
     (error, results) => {
-      if (!result) {
+      if (!results) {
         log.error(error.message);
         res
           .status(HttpStatus.INTERAL_SERVER_ERROR.code)
