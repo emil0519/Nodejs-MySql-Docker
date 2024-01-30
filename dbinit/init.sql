@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXIST patientsdb;
+CREATE DATABASE IF NOT EXISTS patientsdb;
 -- Name of database
 USE patientsdb;
 -- Table inside database, if table exist, drop it and create again
@@ -16,5 +16,5 @@ CREATE TABLE patients(
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     -- email must be unique, have naming convention
-    CONSTRIANT UQ_Patients_Email UNIQUE (email)
+    CONSTRAINT UQ_Patients_Email UNIQUE (email)
 )
