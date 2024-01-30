@@ -1,0 +1,43 @@
+# Docker allow differnet type of services to be run together without installnig it 
+services:
+# do not need to install mysql, docker will install
+  mysqldb: 
+    image: mysql:8.0
+    container_name: mysqlcontainer
+    command: --default-authentication-plugin=mysql_native_password
+    # when it stop, restart
+    restart: unless-stopped
+    # when run, points to init.sql and run
+    volumes: 
+    # pointing files
+      - ./dbinit/init.sql:/docker-entrypoint-initdb.d/0_init.sql
+      # storing databse in local file, file does not need to be exist, will be created by docker
+      - $HOME/database:/var/lib/mysql
+    ports:
+    # mysql port is always 3306?
+      - 3306:3306
+    expose:
+      - 3306
+    environment:
+    # environmental var can be in any order
+      MYSQL_DATABASE: patientsdb
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: letmein
+      MYSQL_ROOT_PASSWORD: letmein
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysqldb
+    networks:
+      - internalnet
+# if we need to connect two different containers, like mysql and node.js, have to go to same network
+networks:
+  internalnet:
+  # default is bridge
+    driver: bridge
+
+# docker script:
+# docker ps -a, check if any container is running
+# docker images
+# docker-compose up -d: shell not being hang by the process
+# after running docker, a mysql server is running on computer and able to connect to it
+# mysql server do not need to be install on the computer 
+# mysql -h localhost -P 3306 --protocol=tcp -uroot -pletmein: run mysql server
